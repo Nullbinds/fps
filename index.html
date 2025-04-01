@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FPS Rank Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            background-color: #f5f5f5;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            text-align: center;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+            width: 100%;
+        }
+        
+        button:hover {
+            background-color: #45a049;
+        }
+        
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e7f3ff;
+            border-radius: 4px;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            display: none;
+        }
+        
+        footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 14px;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>FPS Rank Calculator</h1>
+        
+        <div class="input-group">
+            <label for="fps-input">Enter FPS value:</label>
+            <input type="number" id="fps-input" placeholder="For example: 60" min="1" step="any">
+        </div>
+        
+        <button onclick="calculateRank()">Calculate Rank</button>
+        
+        <div id="result"></div>
+    </div>
+    
+    <footer>
+        <p>Created with GitHub Pages</p>
+    </footer>
+    
+    <script>
+        function calculateRank() {
+            const fps = parseFloat(document.getElementById('fps-input').value);
+            const resultDiv = document.getElementById('result');
+            if (!fps || fps <= 0) {
+                resultDiv.style.display = 'none';
+                alert('Please enter a valid FPS value');
+                return;
+            }
+            // Delay data points (sorted from largest to smallest)
+            const delayPoints = [
+                31.25, 28.5, 26, 23.5, 21, 19.75, 18.5, 17.25, 16, 14.75, 13.5, 12.25, 10.5
+            ];
+            // Calculate delay based on FPS (this is a simple example formula, you can replace it with the actual calculation formula)
+            const calculatedDelay = Math.ceil((9.0*fps)/1000.0)*(1000.0/fps)+(1000.0/fps);
+            // Find the closest delay data point
+            let closestDelay = delayPoints[0];
+            let closestRank = 1;  // Default closest is rank 1
+            let minDifference = Math.abs(calculatedDelay - closestDelay);
+            for (let i = 1; i < delayPoints.length; i++) {
+                const difference = Math.abs(calculatedDelay - delayPoints[i]);
+                if (difference < minDifference) {
+                    closestDelay = delayPoints[i];
+                    closestRank = i + 1;  // The ranking of the delay data point is i+1
+                    minDifference = difference;
+                }
+            }
+            // Display calculation result
+            resultDiv.textContent = `Your recommended rank is: Rank ${closestRank}`;
+            resultDiv.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
