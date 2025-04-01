@@ -7,10 +7,31 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            max-width: 800px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
             line-height: 1.6;
+        }
+        
+        .page-layout {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .image-container {
+            flex: 0 0 auto;
+            max-width: 300px;
+        }
+        
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        .calculator-container {
+            flex: 1 1 auto;
         }
         
         .container {
@@ -76,20 +97,41 @@
             font-size: 14px;
             color: #777;
         }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .page-layout {
+                flex-direction: column;
+            }
+            
+            .image-container {
+                max-width: 200px;
+                margin: 0 auto;
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>FPS Rank Calculator</h1>
-        
-        <div class="input-group">
-            <label for="fps-input">Enter FPS value:</label>
-            <input type="number" id="fps-input" placeholder="For example: 60" min="1" step="any">
+    <div class="page-layout">
+        <div class="image-container">
+            <!-- Replace with the URL to your anime character image on GitHub or use a placeholder -->
+            <img src="anime-girl.jpg" alt="Anime character with axe" onerror="this.onerror=null; this.src='https://via.placeholder.com/300x500?text=Anime+Character';">
         </div>
         
-        <button onclick="calculateRank()">Calculate Rank</button>
-        
-        <div id="result"></div>
+        <div class="calculator-container">
+            <div class="container">
+                <h1>FPS Rank Calculator</h1>
+                
+                <div class="input-group">
+                    <label for="fps-input">Enter FPS value:</label>
+                    <input type="number" id="fps-input" placeholder="For example: 60" min="1" step="any">
+                </div>
+                
+                <button onclick="calculateRank()">Calculate Rank</button>
+                
+                <div id="result"></div>
+            </div>
+        </div>
     </div>
     
     <footer>
